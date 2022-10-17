@@ -5,15 +5,41 @@ class Api {
         this._processResponse = this._processResponse.bind(this);
     }
 
+    signUp(email, password) {
+        return fetch(`${this._baseUrl}/signup`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({
+                password: password,
+                email: email,
+            })
+        })
+            .then(this._processResponse);
+    }
+
+    signIn(email, password) {
+        return fetch(`${this._baseUrl}/signin`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({
+                password: password,
+                email: email,
+            })
+        })
+            .then(this._processResponse);
+    }
+
     getMyUser() {
-        return fetch(`${this._baseUrl}/users/me`, {headers: this._headers})
+        return fetch(`${this._baseUrl}/users/me`, {
+            headers: this._getHeadersWithAuthorization(),
+        })
             .then(this._processResponse);
     }
 
     updateMyUser({name, about}) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: this._getHeadersWithAuthorization(),
             body: JSON.stringify({
                 name: name,
                 about: about,
@@ -25,7 +51,7 @@ class Api {
     updateAvatar({avatar}) {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: this._getHeadersWithAuthorization(),
             body: JSON.stringify({
                 avatar: avatar
             })
@@ -34,14 +60,16 @@ class Api {
     }
 
     getInitialCards() {
-        return fetch(`${this._baseUrl}/cards`, {headers: this._headers})
+        return fetch(`${this._baseUrl}/cards`, {
+            headers: this._getHeadersWithAuthorization(),
+        })
             .then(this._processResponse);
     }
 
     createCard(card) {
         return fetch(`${this._baseUrl}/cards`, {
             method: 'POST',
-            headers: this._headers,
+            headers: this._getHeadersWithAuthorization(),
             body: JSON.stringify(card)
         }).then(this._processResponse);
     }
@@ -49,21 +77,21 @@ class Api {
     removeCard(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: this._getHeadersWithAuthorization()
         }).then(this._processResponse);
     }
 
     likeCard(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
             method: 'PUT',
-            headers: this._headers
+            headers: this._getHeadersWithAuthorization()
         }).then(this._processResponse);
     }
 
     unlikeCard(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: this._getHeadersWithAuthorization()
         }).then(this._processResponse);
     }
 
@@ -74,12 +102,16 @@ class Api {
 
         return Promise.reject(`Ошибка: ${response.status}`);
     }
+
+    _getHeadersWithAuthorization() {
+        const jwt = localStorage.getItem('jwt');
+        return {...this._headers, 'Authorization': `Bearer ${jwt}`}
+    }
 }
 
 export const api = new Api({
-    baseUrl: 'http://localhost:3001',
+    baseUrl: 'http://localhost:3000',
     headers: {
-        authorization: '9e108d88-c2fd-47e7-9a58-31060be64a40',
         'Content-Type': 'application/json'
     }
 });

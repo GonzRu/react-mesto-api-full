@@ -29,7 +29,6 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
 
     const [currentUser, setCurrentUser] = useState();
-    const [anotherCurrentUser, setAnotherCurrentUser] = useState();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const [cards, setCards] = useState([]);
@@ -106,13 +105,10 @@ function App() {
             }));
     }
 
-    const loadAnotherCurrentUser = (jwt) => {
-        api.getMyUser(jwt)
-            .then(res => {
-                setAnotherCurrentUser(res);
-                setIsLoggedIn(true);
-            })
-            .catch(err => console.log(err));
+    const loadCurrentUser = () => {
+        return api.getMyUser()
+            .then(user => setCurrentUser(user))
+            .catch(error => console.log(error));
     }
 
     const onLoggedIn = (data) => {
@@ -122,7 +118,7 @@ function App() {
                 localStorage.setItem('jwt', jwt);
                 setIsLoggedIn(true);
                 history.push('/');
-                loadAnotherCurrentUser(jwt);
+                loadCurrentUser();
             })
             .catch(err => console.log(err));
     }
@@ -145,16 +141,8 @@ function App() {
     }
 
     useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
-        if (jwt) {
-            loadAnotherCurrentUser(jwt);
-        }
-    }, []);
-
-    useEffect(() => {
-        api.getMyUser()
-            .then(user => setCurrentUser(user))
-            .catch(error => console.log(error));
+        loadCurrentUser()
+            .then(() => setIsLoggedIn(true));
     }, []);
 
     useEffect(() => {
@@ -191,7 +179,7 @@ function App() {
                 <Header
                     isLoggedIn={isLoggedIn}
                     onLoggedOut={onLoggedOut}
-                    user={anotherCurrentUser}
+                    user={currentUser}
                 />
                 <Switch>
                     <Route exact path='/'>
