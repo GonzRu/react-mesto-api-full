@@ -1,0 +1,12 @@
+.header__sign-out {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #A9A9A9;
+    cursor: pointer;
+    transition: color .4s linear;
+}
+
+.header__sign-out:hover {
+    color: white;
+}

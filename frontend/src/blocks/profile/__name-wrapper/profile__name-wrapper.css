@@ -1,0 +1,13 @@
+.profile__name-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        min-width: 0;
+        max-width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+        .profile__name-wrapper {
+                margin-left: 32px;
+        }
+}

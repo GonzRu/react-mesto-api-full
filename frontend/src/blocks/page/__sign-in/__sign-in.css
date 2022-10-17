@@ -1,0 +1,9 @@
+.page__sign-in {
+    margin: 60px auto auto;
+}
+
+@media screen and (max-width: 768px) {
+    .page__sign-in {
+        margin-top: 40px;
+    }
+}

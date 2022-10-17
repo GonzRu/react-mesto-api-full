@@ -1,0 +1,9 @@
+.card__body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    height: 79px;
+    box-sizing: border-box;
+    padding: 25px 18px 31px 21px;
+}

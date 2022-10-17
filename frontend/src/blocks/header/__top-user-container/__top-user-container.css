@@ -1,0 +1,26 @@
+.header__top-user-container {
+    flex-direction: column;
+    gap: 18px;
+    justify-content: center;
+    align-items: center;
+
+    height: 0;
+    visibility: hidden;
+    display: flex;
+    transform: translateY(-142px);
+    transition: transform 1s ease-out, visibility 1s, height 1s;
+    border-bottom: 1px solid rgba(84, 84, 84, .7);
+}
+
+.header__top-user-container_visible {
+    transform: translateY(0);
+    visibility: visible;
+    height: 142px;
+    display: flex;
+}
+
+@media screen and (min-width: 768px) {
+    .header__top-user-container {
+        display: none;
+    }
+}
