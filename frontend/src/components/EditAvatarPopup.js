@@ -25,10 +25,11 @@ const EditAvatarPopup = ({isOpen, onClose, onUpdateAvatar, isLoading}) => {
             setError(e.target.validationMessage)
         }
 
-        ref.current.addEventListener('input', onChange)
+        const currentRef = ref.current;
+        currentRef.addEventListener('input', onChange)
 
         return () => {
-            ref.current.removeEventListener('input', onChange)
+            currentRef.removeEventListener('input', onChange)
         }
     }, [])
 

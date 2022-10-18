@@ -107,8 +107,14 @@ function App() {
 
     const loadCurrentUser = () => {
         return api.getMyUser()
-            .then(user => setCurrentUser(user))
-            .catch(error => console.log(error));
+            .then(user => {
+                setCurrentUser(user);
+                setIsLoggedIn(true);
+            })
+            .catch(error => {
+                history.push('/sign-in');
+                console.log(error)
+            });
     }
 
     const onLoggedIn = (data) => {
@@ -141,15 +147,17 @@ function App() {
     }
 
     useEffect(() => {
-        loadCurrentUser()
-            .then(() => setIsLoggedIn(true));
+        loadCurrentUser();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        api.getInitialCards()
-            .then(cards => setCards(cards))
-            .catch(error => console.log(error));
-    }, []);
+        if (isLoggedIn) {
+            api.getInitialCards()
+                .then(cards => setCards(cards))
+                .catch(error => console.log(error));
+        }
+    }, [isLoggedIn]);
 
     useEffect(() => {
         const onMouseDown = e => {

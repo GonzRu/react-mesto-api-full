@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useForm} from '../hooks/useForm';
 
 const Login = ({onLoggedIn}) => {
 
-    const {errors, onChange, isValid, values, setValues} = useForm({email: '', password: ''});
+    const {errors, onChange, isValid, values} = useForm({email: '', password: ''});
 
     const submitHandler = (e) => {
         e.preventDefault();

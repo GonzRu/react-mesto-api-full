@@ -20,6 +20,7 @@ const AddPlacePopup = ({isOpen, onClose, onAddPlace, isLoading}) => {
         name.resetError();
         link.setValue('');
         link.resetError();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
 
     useEffect(() => {

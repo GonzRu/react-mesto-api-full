@@ -6,7 +6,7 @@ import {useForm} from '../hooks/useForm';
 const EditProfilePopup = ({isOpen, onClose, onUpdateUser, isLoading}) => {
 
     const currentUser = React.useContext(CurrentUserContext);
-    const {errors, onChange, isValid, resetForm, setIsValid, values, setValues} = useForm({name: '', about: ''});
+    const {errors, onChange, isValid, resetForm, setIsValid, values} = useForm({name: '', about: ''});
 
     useEffect(() => {
         if (currentUser) {
@@ -19,7 +19,7 @@ const EditProfilePopup = ({isOpen, onClose, onUpdateUser, isLoading}) => {
                 true
             );
         }
-    }, [currentUser, isOpen]);
+    }, [currentUser, isOpen, resetForm]);
 
     useEffect(() => {
         if (currentUser) {
@@ -28,7 +28,7 @@ const EditProfilePopup = ({isOpen, onClose, onUpdateUser, isLoading}) => {
                 setIsValid(false);
             }
         }
-    }, [values])
+    }, [values, currentUser, setIsValid])
 
     const onSubmit = () => {
         onUpdateUser(values);
