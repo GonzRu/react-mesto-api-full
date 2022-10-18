@@ -51,6 +51,12 @@ app.post(
   login,
 );
 
+app.get('/crash-test', () => {
+    setTimeout(() => {
+        throw new Error('Сервер сейчас упадёт');
+    }, 0);
+});
+
 app.use(require('./midlewares/auth'));
 
 app.use(require('./routes/users'));
