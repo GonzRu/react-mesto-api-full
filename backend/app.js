@@ -6,6 +6,7 @@ const cors = require('cors');
 const process = require('process');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const router = require('./routes');
 
 const { PORT = 3000 } = process.env;
@@ -21,5 +22,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(helmet());
 app.use(router);
 app.listen(PORT);
