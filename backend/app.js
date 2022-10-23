@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const { errors, celebrate, Joi } = require('celebrate');
 const { createUser, login } = require('./controllers/usres');
 const { linkValidator } = require('./utils/validators');
-const {requestLogger, errorLogger} = require('./midlewares/logger');
+const { requestLogger, errorLogger } = require('./midlewares/logger');
 
 const { PORT = 3000 } = process.env;
 
@@ -52,9 +52,9 @@ app.post(
 );
 
 app.get('/crash-test', () => {
-    setTimeout(() => {
-        throw new Error('Сервер сейчас упадёт');
-    }, 0);
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
 });
 
 app.use(require('./midlewares/auth'));
