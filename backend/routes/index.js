@@ -7,7 +7,9 @@ const authMiddleware = require('../midlewares/auth');
 const notFoundMiddleware = require('../midlewares/notFound');
 const { requestLoggerMiddleware, errorLoggerMiddleware } = require('../midlewares/logger');
 const errorHandlerMiddleware = require('../midlewares/errors');
+const rateLimitMiddleware = require('../midlewares/rateLimit');
 
+router.use(rateLimitMiddleware);
 router.use(requestLoggerMiddleware);
 router.use(authRouter);
 router.use(authMiddleware);
